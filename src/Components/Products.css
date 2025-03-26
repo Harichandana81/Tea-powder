@@ -1,0 +1,46 @@
+/* Products.css */
+.icon-container {
+  opacity: 0; /* Initially hidden */
+  transform: translateX(20px); /* Start slightly to the right */
+  transition: opacity 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+.card:hover .icon-container {
+  opacity: 1; /* Show icons on hover */
+  transform: translateX(0); /* Slide icons into place */
+}
+
+.icon-background {
+  background: rgba(255, 255, 255, 0.8); /* Semi-transparent white background */
+  backdrop-filter: blur(5px); /* Blur effect for glass-like appearance */
+  border-radius: 50%; /* Circular shape */
+  padding: 6px; /* Reduced padding around the icon */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Smaller and softer shadow */
+  margin-bottom: 6px; /* Reduced space between icons */
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+}
+
+.icon-background:hover {
+  transform: scale(1.1); /* Slightly enlarge on hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Slightly enhanced shadow on hover */
+}
+
+.icon {
+  color: #333; /* Dark color for icons */
+  transition: color 0.2s ease; /* Smooth color transition */
+  font-size: 16px; /* Smaller icon size */
+}
+
+.icon-background:hover .icon {
+  color: #f70b0b; /* Change icon color on hover */
+}
+
+/* Image Animation */
+.card-img-top {
+  transition: transform 0.3s ease, opacity 0.3s ease; /* Smooth transition for image */
+}
+
+.card:hover .card-img-top {
+  transform: scale(1.05); /* Slightly scale up the image */
+  opacity: 0.9; /* Slightly reduce opacity for a subtle effect */
+}

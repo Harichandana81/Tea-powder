@@ -1,0 +1,129 @@
+/* General Styles */
+body {
+  font-family: 'Arial', sans-serif;
+  background-color: #f4f4f4;
+  color: #003826;
+  margin: 0;
+  padding: 20px;
+  line-height: 1.6;
+}
+.head{
+  text-align: center;
+  font-weight: bold;
+}
+
+.head1{
+  text-align: center;
+  padding-right: 520px;
+  margin-bottom: -20px;
+  color: black;
+  font-weight: bold;
+}
+
+.p1{
+  text-align: justify;
+  margin-top: -180px;
+  margin-left: 400px;
+  padding: 20px;
+  font-size: 1.1rem;
+  color: black;
+}
+ #img1{
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  /* border: 1px solid #212523; Adds a green border */
+  margin-left:100px ;
+  
+}
+
+
+.head2{
+  text-align: center;
+  padding-right: 1000px;
+  margin-bottom: -40px;
+  margin-top: 80px;
+  color: black;
+  
+}
+#img2{
+  margin-left: 1100px;
+  margin-bottom: 20px;
+}
+.p2{
+  text-align: justify;
+  margin-top: -180px;
+  margin-left: 160px;
+  padding: 20px;
+  font-size: 1.1rem;
+  color: black;
+}
+.head3{
+  text-align: center;
+  padding-right: 520px;
+  margin-bottom: -20px;
+  margin-top: 80px;
+  color: black;
+}
+#img3{
+  width: 200px;
+  height: 200px;
+  object-fit: cover;
+  /* border: 1px solid #212523; Adds a green border */
+  margin-left:100px ;
+}
+.p3{
+  text-align: justify;
+  margin-top: -180px;
+  margin-left: 400px;
+  padding: 20px;
+  font-size: 1.1rem;
+  color: black; 
+}
+.head4{
+  text-align: center;
+  padding-right: 1000px;
+  margin-bottom: -40px;
+  color:black;
+  margin-top: 80px;
+}
+#img4{
+  margin-left: 1100px;
+  margin-bottom: 20px;
+}
+.p4{
+  text-align: justify;
+  margin-top: -180px;
+  margin-left: 160px;
+  padding: 20px;
+  font-size: 1.1rem;
+  color:black;
+}
+.image-wrapper {
+  position: relative;
+  width: 200px;
+  height: auto;
+}
+
+.hover-image {
+  width: 100%;
+  height: auto;
+  border-radius: 50%;
+  box-shadow: 0 6px 8px black;
+  transition: opacity 0.5s ease;
+}
+
+.hidden {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.image-wrapper:hover .hover-image:first-child {
+  opacity: 0;
+}
+
+.image-wrapper:hover .hidden {
+  opacity: 1;
+}

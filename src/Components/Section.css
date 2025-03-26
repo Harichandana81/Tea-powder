@@ -1,0 +1,64 @@
+/* Container for all sections */
+.section-container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding: 40px 20px;
+  background-color: #f9f9f9;
+}
+
+/* Individual section item */
+.section-item {
+  text-align: center;
+  max-width: 250px;
+  padding: 20px;
+  margin: 10px;
+  background-color: #fff;
+  border-radius: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Border animation */
+.section-item::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, #007bff, transparent);
+  transition: left 0.5s ease;
+}
+
+.section-item:hover::before {
+  left: 100%;
+}
+
+/* Hover effect */
+.section-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Icon styling */
+.section-icon {
+  font-size: 2.5rem;
+  margin-bottom: 15px;
+  color: #007bff;
+}
+
+/* Title styling */
+.section-title {
+  font-size: 1.25rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Description styling */
+.section-description {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+}

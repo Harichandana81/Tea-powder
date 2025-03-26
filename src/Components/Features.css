@@ -1,0 +1,163 @@
+/* Features.css */
+.features-container {
+  display: flex;
+  justify-content: space-between; /* Distribute space between items */
+  align-items: center; /* Vertically center items */
+  padding: 20px; 
+  flex-wrap: nowrap; /* Prevent wrapping to the next line */
+  overflow-x: auto; /* Add horizontal scroll if content overflows */
+}
+
+.feature {
+  text-align: center;
+  padding: 20px;
+  border-radius: 8px;
+  margin: 10px;
+  min-width: 200px; /* Minimum width for each feature card */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  flex-shrink: 0; /* Prevent shrinking of feature cards */
+}
+
+.feature:hover {
+  transform: translateY(-10px); /* Move the card up slightly on hover */
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Add a shadow on hover */
+}
+
+.feature-image {
+  width: 100px; /* Set a fixed size for the image */
+  height: 100px;
+  border-radius: 50%; /* Make the image circular */
+  object-fit: cover; /* Ensure the image covers the area */
+  margin-bottom: 15px;
+  transition: transform 0.3s ease;
+}
+
+.feature:hover .feature-image {
+  transform: scale(1.1); /* Enlarge the image on hover */
+}
+
+.feature h3 {
+  margin: 0 0 10px;
+  color: #333;
+  transition: color 0.3s ease;
+}
+
+.feature:hover h3 {
+  color: #4CAF50; /* Change the title color on hover */
+}
+
+.feature p {
+  margin: 0;
+  color: #666;
+  transition: color 0.3s ease;
+}
+
+.feature:hover p {
+  color: #333; /* Darken the description text on hover */
+}
+/* Add a subtle animation when the feature card appears */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.feature {
+  animation: fadeInUp 0.5s ease-out;
+}
+
+/* Add a pulse animation to the image */
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.feature-image {
+  animation: pulse 2s infinite; /* Apply the pulse animation */
+}
+
+/* Add an overlay effect on hover */
+.feature::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(67, 1, 1, 0.5); /* Semi-transparent black overlay */
+  opacity: 0;
+  transition: opacity 0.3s ease;
+  border-radius: 8px;
+}
+
+.feature:hover::before {
+  opacity: 1; /* Show the overlay on hover */
+}
+
+.feature-content {
+  position: relative;
+  z-index: 1; /* Ensure content is above the overlay */
+}
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .feature {
+    padding: 15px;
+    margin: 5px;
+  }
+
+  .feature-image {
+    max-width: 150px;
+  }
+
+  .feature-icon {
+    font-size: 1.5rem;
+  }
+
+  .feature-title {
+    font-size: 1.25rem;
+  }
+
+  .feature-description,
+  .feature-dis {
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .feature {
+    padding: 10px;
+    margin: 5px;
+  }
+
+  .feature-image {
+    max-width: 120px;
+  }
+
+  .feature-icon {
+    font-size: 1.25rem;
+  }
+
+  .feature-title {
+    font-size: 1rem;
+  }
+
+  .feature-description,
+  .feature-dis {
+    font-size: 0.8rem;
+  }
+}
