@@ -1,0 +1,208 @@
+// This is the sample of server.js
+
+const express = require('express');
+const ConnectDB = require('./database.js');
+require('dotenv').config();
+const router = require('./route.js')
+
+const app = express();
+const port = process.env.PORT
+
+app.use(express.json())
+app.use('/api',router)
+app.use((req, res, next) => {
+    console.log(`Path: ${res.path} method: ${res.method}`);
+})
+
+app.listen(port,() => {
+    console.log(`server runing on port: ${port}`);
+    ConnectDB();
+})
+
+==========================================================================
+
+// This is the sample of database.js
+
+
+const mongoose = require('mongoose')
+require('dotenv').config()
+
+const db = process.env.DB
+
+const ConnectDB = async () => {
+    try{
+        await mongoose.connect(db, {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    });
+    console.log('database connected successfully');
+    }catch(e){
+        console.log(e.message);
+    }
+}
+
+module.exports= ConnectDB;
+
+==========================================================================
+
+// This is the sample of TaskSchema or dbmodel.js
+
+
+const mongoose = require ('mongoose');
+
+const Schema = new mongoose.Schema(
+    {
+        title: {
+            type: String,
+            required: true,
+        },
+        description: {
+            type: String,
+            required: true,
+        }
+    },
+    { timestamps: true }
+);
+
+module.exports = mongoose.model('Task', Schema);
+
+==========================================================================
+
+// This is the sample of Taskcontroller.js
+
+
+const mongoose = require('mongoose');
+const Schema = require ('./schema.js')
+
+
+// post the tasks - POST
+
+const controller = async (req, res) => {
+    const { title, description } = req.body;
+    try{
+        const task= await Schema.create({ title, description });
+        res.status(200).json(task);
+    }catch(e){
+        res.status(400).json({error:e.message});
+    }
+}
+
+
+// get all tasks - GET
+
+const controllget = async (req, res) => {
+    try{
+        const taskget = await Schema.find();
+        res.status(200).json(taskget)
+    }catch (e){
+       res.status(400).json({error: e.message}) 
+    }
+}
+
+
+// get a single task - GET
+
+const singletask = async (req, res) => {
+    const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+        return res.status(404).json({error: 'task not founded'})
+    }
+    try {
+        const stask = await Schema.findById(id)
+        res.status(200).json(stask)
+    }catch (e){
+        res.status(400).json({error: e.message});
+    }
+}
+
+
+// patch or update the task - PATCH
+
+const updatetask = async (req, res) => {
+    const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+       return res.status(404).json({error: 'id is not vaild'})
+    }
+    try{
+        const patchtask = await Schema.findByIdAndUpdate({_id:id},{...req.body})
+        res.status(200).json(patchtask)
+    }catch (e) {
+        res.status(400).json({error : e.message})
+    }
+}
+
+
+// Delete tasks - DELETEBYID
+
+const deletetask = async (req, res) => {
+    const {id} = req.params;
+    if(!mongoose.Types.ObjectId.isValid(id)) {
+       return res.status(404).json({error: 'id is not vaild'})
+    }
+    try{
+        const deltask = await Schema.findByIdAndDelete(id);
+        res.status(200).json(deltask);
+    }catch (e) {
+        res.status(400).json({error: e.message})
+    }
+}
+
+module.exports = {controller, controllget, singletask, updatetask, deletetask};
+
+==========================================================================
+
+// This is the sample of Taskrouter.js
+
+
+const express = require("express");
+const {controller,controllget,singletask,updatetask,deletetask} =require('./controller.js');
+const router = express.Router();
+
+router.post('/',controller);
+router.get('/',controllget);
+router.get("/:id",singletask);
+router.patch("/:id",updatetask);
+router.delete("/:id",deletetask);
+
+module.exports=router;
+
+
+
+
+
+
+
+
+
+
+const products = [
+    // 🍎 Fruits
+    { id: 1, name: "Fresh Apples", imgUrl: "https://via.placeholder.com/150", description: "Crisp and juicy apples, rich in fiber and vitamins.", category: "Fruits", price: 120, rating: 4.6 },
+    { id: 2, name: "Organic Bananas", imgUrl: "https://via.placeholder.com/150", description: "Naturally sweet and potassium-rich bananas.", category: "Fruits", price: 60, rating: 4.8 },
+    { id: 3, name: "Juicy Oranges", imgUrl: "https://via.placeholder.com/150", description: "Sweet and tangy oranges, rich in vitamin C.", category: "Fruits", price: 90, rating: 4.5 },
+    { id: 4, name: "Ripe Mangoes", imgUrl: "https://via.placeholder.com/150", description: "Delicious and pulpy mangoes, perfect for smoothies.", category: "Fruits", price: 150, rating: 4.7 },
+    { id: 5, name: "Sweet Pineapples", imgUrl: "https://via.placeholder.com/150", description: "Fresh and tangy pineapples, rich in enzymes.", category: "Fruits", price: 200, rating: 4.4 },
+    { id: 6, name: "Watermelons", imgUrl: "https://via.placeholder.com/150", description: "Refreshing and hydrating watermelon slices.", category: "Fruits", price: 180, rating: 4.6 },
+    { id: 7, name: "Grapes (Green)", imgUrl: "https://via.placeholder.com/150", description: "Seedless green grapes, perfect for snacking.", category: "Fruits", price: 120, rating: 4.3 },
+    { id: 8, name: "Pomegranates", imgUrl: "https://via.placeholder.com/150", description: "Fresh pomegranates with sweet and tangy seeds.", category: "Fruits", price: 220, rating: 4.8 },
+
+    // 🥕 Vegetables
+    { id: 9, name: "Fresh Tomatoes", imgUrl: "https://via.placeholder.com/150", description: "Ripe and juicy tomatoes for salads and cooking.", category: "Vegetables", price: 40, rating: 4.2 },
+    { id: 10, name: "Organic Carrots", imgUrl: "https://via.placeholder.com/150", description: "Crunchy and sweet carrots, rich in beta-carotene.", category: "Vegetables", price: 50, rating: 4.5 },
+    { id: 11, name: "Green Spinach", imgUrl: "https://via.placeholder.com/150", description: "Fresh and nutrient-rich spinach leaves.", category: "Vegetables", price: 35, rating: 4.3 },
+    { id: 12, name: "Bell Peppers", imgUrl: "https://via.placeholder.com/150", description: "Colorful and crisp bell peppers, rich in antioxidants.", category: "Vegetables", price: 80, rating: 4.4 },
+    { id: 13, name: "Potatoes", imgUrl: "https://via.placeholder.com/150", description: "Fresh and starchy potatoes, perfect for cooking.", category: "Vegetables", price: 45, rating: 4.1 },
+    { id: 14, name: "Onions", imgUrl: "https://via.placeholder.com/150", description: "Fresh and flavorful onions, perfect for all dishes.", category: "Vegetables", price: 55, rating: 4.3 },
+    { id: 15, name: "Cucumbers", imgUrl: "https://via.placeholder.com/150", description: "Crunchy cucumbers, great for salads and snacks.", category: "Vegetables", price: 30, rating: 4.5 },
+    { id: 16, name: "Broccoli", imgUrl: "https://via.placeholder.com/150", description: "Fresh and fiber-rich broccoli florets.", category: "Vegetables", price: 90, rating: 4.6 },
+
+    // 👜 Accessories
+    { id: 17, name: "Leather Belt", imgUrl: "https://via.placeholder.com/150", description: "Durable and stylish leather belt for all outfits.", category: "Accessories", price: 699, rating: 4.3 },
+    { id: 18, name: "Sunglasses", imgUrl: "https://via.placeholder.com/150", description: "UV-protected stylish sunglasses for outdoor activities.", category: "Accessories", price: 1299, rating: 4.7 },
+    { id: 19, name: "Leather Wallet", imgUrl: "https://via.placeholder.com/150", description: "Premium leather wallet with multiple compartments.", category: "Accessories", price: 899, rating: 4.6 },
+    { id: 20, name: "Baseball Cap", imgUrl: "https://via.placeholder.com/150", description: "Trendy and adjustable cap for casual wear.", category: "Accessories", price: 499, rating: 4.2 },
+    { id: 21, name: "Wrist Watch", imgUrl: "https://via.placeholder.com/150", description: "Stylish analog wristwatch with a leather strap.", category: "Accessories", price: 2999, rating: 4.8 },
+    { id: 22, name: "Travel Backpack", imgUrl: "https://via.placeholder.com/150", description: "Water-resistant backpack with multiple compartments.", category: "Accessories", price: 2199, rating: 4.5 },
+    { id: 23, name: "Smart Keychain", imgUrl: "https://via.placeholder.com/150", description: "Bluetooth-enabled smart keychain with location tracking.", category: "Accessories", price: 999, rating: 4.4 },
+    { id: 24, name: "Leather Gloves", imgUrl: "https://via.placeholder.com/150", description: "Comfortable and stylish gloves for winter wear.", category: "Accessories", price: 799, rating: 4.3 }
+];
