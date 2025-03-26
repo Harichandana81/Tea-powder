@@ -1,4 +1,4 @@
-import tea1 from "../assets/Ceremonial.jpg"
+import tea1 from "../assets/ceremonial.jpg"
 import tea01 from "../assets/bb.jpg"
 import tea02 from "../assets/cc2.jpg"
 import tea2 from "../assets/blacktea.jpg"
